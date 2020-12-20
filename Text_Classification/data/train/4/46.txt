@@ -1,0 +1,1 @@
+scenario expect find balanced power position buyer supplier .

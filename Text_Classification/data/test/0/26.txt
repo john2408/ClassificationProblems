@@ -1,0 +1,1 @@
+kirkwood adds approach seems overly complex need sometimes extensive pairwise comparisons alternatives extensive mathematical calculations determine rankings .

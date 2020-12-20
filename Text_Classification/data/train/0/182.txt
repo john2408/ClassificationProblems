@@ -1,0 +1,1 @@
+strategies focused keeping current position quadrant , strategies directed towards moving another position .
