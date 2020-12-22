@@ -1,1 +1,0 @@
-diversify : search new suppliers substitutes .

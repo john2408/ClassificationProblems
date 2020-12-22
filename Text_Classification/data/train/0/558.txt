@@ -1,1 +1,0 @@
-cronbach 's alpha cr statistics substantially exceed threshold value 0.7 , indicating internal consistency .

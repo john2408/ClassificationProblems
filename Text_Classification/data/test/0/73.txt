@@ -1,1 +1,0 @@
-kirkwood identified two possible savfs : piecewise linear exponential .

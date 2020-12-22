@@ -1,1 +1,0 @@
-scale runs +2 ( minimal interdependence ) +10 ( maximal interdependence ) consider values 5 low , 5 7 moderate 7 high .
