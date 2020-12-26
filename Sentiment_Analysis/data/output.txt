@@ -13,3 +13,18 @@ Best Accuracy : 0.8273
 {'vocab_size': 4603, 'num_filters': 32, 'maxlen': 100, 'kernel_size': 3, 'embedding_dim': 50}
 Test Accuracy : 0.8341
 
+Running amazon data set
+Best Accuracy : 0.8079
+{'vocab_size': 5000, 'num_filters_cv2': 128, 'num_filters_cv1': 32, 'maxlen': 100, 'kernel_size_cv2': 5, 'kernel_size_cv1': 2, 'embedding_dim': 100}
+Test Accuracy : 0.8151
+
+Running imdb data set
+Best Accuracy : 0.7967
+{'vocab_size': 6000, 'num_filters_cv2': 128, 'num_filters_cv1': 32, 'maxlen': 100, 'kernel_size_cv2': 5, 'kernel_size_cv1': 2, 'embedding_dim': 50}
+Test Accuracy : 0.8282
+
+Running yelp data set
+Best Accuracy : 0.7948
+{'vocab_size': 6000, 'num_filters_cv2': 64, 'num_filters_cv1': 32, 'maxlen': 100, 'kernel_size_cv2': 7, 'kernel_size_cv1': 2, 'embedding_dim': 50}
+Test Accuracy : 0.8151
+
