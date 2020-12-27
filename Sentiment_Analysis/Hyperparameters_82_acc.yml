@@ -1,0 +1,10 @@
+Hyperparameters:
+  sent_tokenizer: False
+  use_nltk_cleaning : False
+  use_tfidf_tokenizer : False
+  use_keras_tokenizer : True
+  use_pretrained_embeddings : True
+  use_tfidf_as_embedding_weights : True
+  epochs : 30
+  batch_size : 16
+  seq_input_len : 50
