@@ -1,0 +1,11 @@
+Running CNN Modeling data set
+Best Accuracy : 0.7430
+{'vocab_size': 6000, 'use_pretrained_embeddings': False, 'seq_input_len': 30, 'output_label': 5, 'num_filters_cv': (128, 32), 'nodes_hidden_dense_layer': 40, 'kernel_size_cv': (3, 5), 'embedding_matrix': array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]]), 'embedding_dim': 40}
+Test Accuracy : 0.7841
+

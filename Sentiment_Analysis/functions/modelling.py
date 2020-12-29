@@ -42,12 +42,13 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
     # Filters: No. of output filter in the convolution
     # kernel_size: An integer or tuple/list of a single integer, specifying the length of the 1D convolution window.
     model.add(layers.Conv1D(filters = num_filters_cv[0], kernel_size = kernel_size_cv[0], activation='relu'))
+  
+    # Filters: No. of output filter in the convolution
+    # kernel_size: An integer or tuple/list of a single integer, specifying the length of the 1D convolution window.
+    model.add(layers.Conv1D(filters = num_filters_cv[1], kernel_size = kernel_size_cv[1], activation='relu'))
 
     # Global max pooling operation for 1D temporal data.
     # Downsamples the input representation by taking the maximum value over the time dimension
-    #model.add(layers.GlobalMaxPooling1D())
-    model.add(layers.Conv1D(filters = num_filters_cv[1], kernel_size = kernel_size_cv[1], activation='relu'))
-
     model.add(layers.GlobalMaxPooling1D())
 
     model.add(layers.Dense(nodes_hidden_dense_layer, activation='relu'))
