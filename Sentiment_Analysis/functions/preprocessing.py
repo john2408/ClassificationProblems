@@ -16,14 +16,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-
     
 def clean_text(text):
-    """
-        text: a string
+    """Function to clean raw corpus text.
 
-        return: modified initial string
+    Parameters
+    ----------
+    text : ´numpy.array´: ´str´
+        Corpus text, each element being a sentence
+
+    Returns
+    -------
+    text
+        ´numpy.array´ : ´str´
     """
+    
     REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')
     BAD_SYMBOLS_RE = re.compile('[^0-9a-z #+_]')
     STOPWORDS = set(stopwords.words('english'))
@@ -34,6 +41,7 @@ def clean_text(text):
     text = BAD_SYMBOLS_RE.sub('', text) # remove symbols which are in BAD_SYMBOLS_RE from text. substitute the matched string in BAD_SYMBOLS_RE with nothing. 
     text = text.replace('x', '')
     text = ' '.join(word for word in text.split() if word not in STOPWORDS) # remove stopwors from text
+    
     return text
 
  
@@ -42,8 +50,28 @@ def clean_text(text):
 
 
 def data_cleaning(corpus, sent_tokenizer = False,  text_cleaning = True, use_nltk_cleaning = False ):
+    """Function to clean raw corpus text.
+
+    Parameters
+    ----------
+    corpus : ´pandas.dataframe´
+        df containing two columns 'text' and 'label'
+        
+    sent_tokenizer: ´bool´
+        if sentence tokenizer is used
     
-    """
+    text_cleaning: ´bool´
+        if text cleaning function is applied
+        
+    use_nltk_cleaning: ´bool´
+        if NLTK cleaning function is applied
+
+    Returns
+    -------
+    corpus: ´pandas.dataframe´
+        df containinig two columns 'text' and 'label'. 
+        Column 'text' having cleaned corpus data.
+           
     """
     
     if text_cleaning:
@@ -105,8 +133,28 @@ def data_cleaning(corpus, sent_tokenizer = False,  text_cleaning = True, use_nlt
     return corpus
 
 
-def prepare_training_data(corpus):
-    """
+def prepare_training_data(corpus, test_size = 0.25):
+    """Function to generate the train and test data sets, 
+    it takes in a pandas data frame with columns
+    'text' and 'label', then it encodes the
+    categorical variables in 'label', and generates
+    the corresponding traning and test X and Y sets
+
+    Parameters
+    ----------
+    corpus : ´pandas.dataframe´
+        df containing two columns 'text' and 'label'
+    test_size : ´float´
+        test size for the given data
+
+    Returns
+    -------
+    output: ´dict´
+        'sentences_train': ´numpy.array´ 
+        'sentences_test': ´numpy.array´
+        'Y_train': ´numpy.array´
+        'Y_test': ´numpy.array´
+        'output_label': ´numpy.array´ - unique encoded label variables
     """
     
     output = {}
@@ -119,15 +167,13 @@ def prepare_training_data(corpus):
     encoded_Y = Encoder.fit_transform(corpus['label'].values)
     Y = pd.get_dummies(encoded_Y).values
 
-    sentences_train, sentences_test, Y_train, Y_test = train_test_split( sentences, Y, test_size=0.25)
-
-    output_label = len(np.unique(encoded_Y))
-    
+    sentences_train, sentences_test, Y_train, Y_test = train_test_split( sentences, Y, test_size = test_size)
+   
     output['sentences_train'] = sentences_train
     output['sentences_test'] = sentences_test
     output['Y_train'] = Y_train
     output['Y_test'] = Y_test
-    output['output_label'] = output_label
+    output['output_label'] = len(np.unique(encoded_Y))
 
     return output
 

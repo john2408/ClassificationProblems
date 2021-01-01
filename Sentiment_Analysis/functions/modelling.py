@@ -18,9 +18,45 @@ import numpy as np
 
 def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embedding_matrix,
                  seq_input_len, output_label, nodes_hidden_dense_layer, use_pretrained_embeddings ):
-    """
+    """Function to create CNN model. 
+
+    Parameters
+    ----------
+    num_filters_cv : tuple: ´int´
+        number of filter for the first and second convolutional layers
     
-    """      
+    kernel_size_cv : tuple: ´int´
+        number of kernel sizes for the first and second convolutional layers
+
+    vocab_size: ´int´
+        Vocab size if keras embedding space training is wanted
+
+    embedding_dim: ´int´
+        Length of the word vector ( dimension in the embedding space)
+    
+    embedding_matrix: ´numpy.array´
+        2d numpy array containing the embedding space
+        rows = vocab_size
+        columns = embedding_dim
+
+    seq_input_len: ´int´
+        Length of the vector sentence ( no. of words per sentence)
+    
+    output_label: ´int´
+        Number of unique labeled categories
+    
+    nodes_hidden_dense_layer: ´int´
+        No. of nodes for hidden Dense layer
+    
+    use_pretrained_embeddings: ´bool´
+        If set to FALSE then keras embedding space training is used instead
+        Embedding Space possibilites are GloVe or TFIDF
+
+    Returns
+    -------
+    model
+        keras.Sequential()
+    """
 
     model = Sequential()
 
@@ -65,12 +101,56 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
 
 
 def hyperparameter_optimization(X_train, Y_train, X_test, Y_test, 
-                                epochs, batch_size, param_grid, cv, n_iter, output_file,
+                                epochs, batch_size, param_grid, cv, n_iter,
                                 verbose = False ):
-    """
+    """Function to clean raw corpus text.
+
+    Parameters
+    ----------
+    X_train : numpy.array: `float`
+        senteces text to train the model
     
-    """  
+    Y_train : numpy.array: `int`
+        labeled categories to trained the model
+
+    X_test : numpy.array: `float`
+        senteces text to test the model
+    
+    Y_test : numpy.array: `int`
+        labeled categories to test the model
+    
+    epochs: `int`
+        No. of optimizatoin runs
+
+    batch_size: `int`
+        No. of sentences batch to train
+
+    param_grid: `dict`
+        Dict cointaining the parameters for the model to run 
+        RandomGridSearch on.
+
+    cv: `int`
+        No. of Cross validations
+
+    n_iter: `int`
+        No. of Iterations for the Random Search
+
+    verbose: ´int´
+        Controls the level of messaging. If > 1, it
+        prints out the label accuracy.
         
+    Returns
+    -------
+    output: `dict`
+        'best_train_acc': `float` 
+        'best_train_param': `dict` with the best parameters
+        'test_acc': `float`
+        'conf_matrix': numpy.array 
+        'Y_pred': numpy.array
+        'grid_result': numpy.array 
+    """  
+
+    output = {}  
 
     # Create NN Model 
     print("Creating Model...")
@@ -94,9 +174,12 @@ def hyperparameter_optimization(X_train, Y_train, X_test, Y_test,
     # Predict Y values
     Y_pred = grid.predict(X_test)
     
+    # Create empty conf_matrix
+    conf_matrix = np.array([])
+
     try:
         # Generate Confusion Matrix
-        conf_matrix = confusion_matrix(Y_pred.argmax(axis=1), Y_test.argmax(axis=1)) / len(Y_pred)
+        conf_matrix = confusion_matrix(Y_pred, Y_test.argmax(axis=1)) / len(Y_pred)
 
         # Calculate Label Accuracy
         label_acc = cal_label_accuracy(conf_matrix, verbose  = 1)
@@ -106,24 +189,19 @@ def hyperparameter_optimization(X_train, Y_train, X_test, Y_test,
 
     # Evaluate testing set
     test_accuracy = grid.score(X_test, Y_test)
-
-    print("Writting results...")
-    with open(output_file, 'a') as f:
-        s = ('Running {} data set\nBest Accuracy : ''{:.4f}\n{}\nTest Accuracy : {:.4f}\n\n')
-        
-        output_string = s.format(
-            "CNN Modeling",
-            grid_result.best_score_,
-            grid_result.best_params_,
-            test_accuracy,
-            conf_matrix)
-        
-        print(output_string)
-        f.write(output_string)
     
-    return Y_pred
-        
+    # store output variable into dict
+    output['best_train_acc'] = grid_result.best_score_
+    output['best_train_param'] = grid_result.best_params_
+    output['test_acc'] = test_accuracy
+    output['conf_matrix'] = conf_matrix
+    output['Y_pred'] = Y_pred
+    output['grid_result'] = grid_result
 
+    print("Best Test Accuracy was: " , test_accuracy)
+
+    return output
+ 
 
 def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
 

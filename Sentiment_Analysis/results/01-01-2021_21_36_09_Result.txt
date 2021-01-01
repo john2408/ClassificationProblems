@@ -1,0 +1,4 @@
+Running CNN Modeling data set
+Best Accuracy : 0.7670
+Test Accuracy : 0.8337
+
