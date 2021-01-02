@@ -1,7 +1,6 @@
 # Sentiment Analysis with Convolutional Neural Networks
 ------------------------------
 
-
 The model uses a data set containing two columns: 
 
 - 'sentences': plain text in English language. 
@@ -20,9 +19,10 @@ Cannot clone object <tensorflow.python.keras.wrappers.scikit_learn.KerasClassifi
 # Build Docker Container
 --------------------------
 
-docker build text_classifier:1.0 .
+docker build -t text_classifier:1.0 .
 
 # Run Docker Container
 -------------------------
 
 docker run -v ~/results_docker:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
+docker run -p 3000:3000 -v ~/results_docker:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0

@@ -40,6 +40,4 @@ ENV PATH="/opt/program:${PATH}"
 COPY . /opt/program
 WORKDIR /opt/program
 
-RUN ls -la ./functions/
-
 ENTRYPOINT ["python","main.py"]
