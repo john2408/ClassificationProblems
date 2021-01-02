@@ -51,6 +51,7 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
     use_pretrained_embeddings: `bool`
         If set to FALSE then keras embedding space training is used instead
         Embedding Space possibilites are GloVe or TFIDF
+        see function: data_vectorization()
 
     Returns
     -------
