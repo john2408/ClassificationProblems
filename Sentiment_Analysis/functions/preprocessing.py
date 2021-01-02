@@ -22,13 +22,13 @@ def clean_text(text):
 
     Parameters
     ----------
-    text : ´numpy.array´: ´str´
+    text : obj: numpy.array: `str`
         Corpus text, each element being a sentence
 
     Returns
     -------
-    text
-        ´numpy.array´ : ´str´
+    text: obj: numpy.array : str
+        Clean text
     """
     
     REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')
@@ -54,21 +54,21 @@ def data_cleaning(corpus, sent_tokenizer = False,  text_cleaning = True, use_nlt
 
     Parameters
     ----------
-    corpus : ´pandas.dataframe´
+    corpus : obj: pandas.dataframe
         df containing two columns 'text' and 'label'
         
-    sent_tokenizer: ´bool´
+    sent_tokenizer: `bool`
         if sentence tokenizer is used
     
-    text_cleaning: ´bool´
+    text_cleaning: `bool`
         if text cleaning function is applied
         
-    use_nltk_cleaning: ´bool´
+    use_nltk_cleaning: `bool`
         if NLTK cleaning function is applied
 
     Returns
     -------
-    corpus: ´pandas.dataframe´
+    corpus: `pandas.dataframe`
         df containinig two columns 'text' and 'label'. 
         Column 'text' having cleaned corpus data.
            
@@ -142,19 +142,19 @@ def prepare_training_data(corpus, test_size = 0.25):
 
     Parameters
     ----------
-    corpus : ´pandas.dataframe´
+    corpus : obj: pandas.dataframe
         df containing two columns 'text' and 'label'
-    test_size : ´float´
+    test_size : `float`
         test size for the given data
 
     Returns
     -------
-    output: ´dict´
-        'sentences_train': ´numpy.array´ 
-        'sentences_test': ´numpy.array´
-        'Y_train': ´numpy.array´
-        'Y_test': ´numpy.array´
-        'output_label': ´numpy.array´ - unique encoded label variables
+    output: `dict`
+        'sentences_train': numpy.array 
+        'sentences_test': numpy.array
+        'Y_train': numpy.array
+        'Y_test': numpy.array
+        'output_label': numpy.array - unique encoded label variables
     """
     
     output = {}

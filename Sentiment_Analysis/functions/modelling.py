@@ -22,40 +22,39 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
 
     Parameters
     ----------
-    num_filters_cv : tuple: ´int´
+    num_filters_cv : obj: tuple: `int`
         number of filter for the first and second convolutional layers
     
-    kernel_size_cv : tuple: ´int´
+    kernel_size_cv : obj: tuple: `int`
         number of kernel sizes for the first and second convolutional layers
 
-    vocab_size: ´int´
+    vocab_size: `int`
         Vocab size if keras embedding space training is wanted
 
-    embedding_dim: ´int´
+    embedding_dim: `int`
         Length of the word vector ( dimension in the embedding space)
     
-    embedding_matrix: ´numpy.array´
+    embedding_matrix: obj: numpy.array
         2d numpy array containing the embedding space
         rows = vocab_size
         columns = embedding_dim
 
-    seq_input_len: ´int´
+    seq_input_len: `int`
         Length of the vector sentence ( no. of words per sentence)
     
-    output_label: ´int´
+    output_label: `int`
         Number of unique labeled categories
     
-    nodes_hidden_dense_layer: ´int´
+    nodes_hidden_dense_layer: `int`
         No. of nodes for hidden Dense layer
     
-    use_pretrained_embeddings: ´bool´
+    use_pretrained_embeddings: `bool`
         If set to FALSE then keras embedding space training is used instead
         Embedding Space possibilites are GloVe or TFIDF
 
     Returns
     -------
-    model
-        keras.Sequential()
+    model obj: keras.Sequential()
     """
 
     model = Sequential()
@@ -138,7 +137,7 @@ def hyperparameter_optimization(X_train, Y_train, X_test, Y_test,
     verbose: ´int´
         Controls the level of messaging. If > 1, it
         prints out the label accuracy.
-        
+
     Returns
     -------
     output: `dict`
@@ -204,6 +203,38 @@ def hyperparameter_optimization(X_train, Y_train, X_test, Y_test,
  
 
 def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
+    """Function to tokenize the word with the keras word tokenizer engine. 
+
+    Parameters
+    ----------
+    sentences_train : obj: numpy.array: `str`
+        Corpus text, Sentences to train the model
+
+    sentences_test: obj: numpy.array: `str`
+        Corpus text, Sentences to test the model
+
+    num_words: `int` 
+        No. of words to use in the embedding space of GloVe or TFIDF
+
+    seq_input_len: `int`
+        Length of the vector sentence ( no. of words per sentence)
+
+    Returns
+    -------
+    X_train: numpy.array: `float`
+        Array of the tokenized train sentences
+
+    X_test: numpy.array: `float`
+        Array of the tokenized test sentences
+
+    vocab_size: `int`
+        Vocab size if keras embedding space training is wanted
+    
+    vocab: `dict`
+        Containing key pair 'int':'word', each 'int' represents
+        the encoding which the keras tokenizer generates
+
+    """
 
     # Start Tokenizer Object
     tokenizer = Tokenizer(num_words = num_words)
@@ -225,8 +256,37 @@ def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
 
 
 def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test):
-   
-    """
+    """Function to tokenize the words with the TFIDF tokenizer 
+
+    Parameters
+    ----------
+    sentences_train : numpy.array: `str`
+        Corpus text, Sentences to train the model
+
+    sentences_test: numpy.array: `str`
+        Corpus text, Sentences to test the model
+
+    num_words: `int` 
+        No. of words to use in the embedding space of GloVe or TFIDF
+
+    corpus : obj: pandas.dataframe
+        df containing two columns 'text' and 'label'
+
+    Returns
+    -------
+    X_train: obj: numpy.array: `float`
+        Array of the tokenized train sentences
+
+    X_test: obj: numpy.array: `float`
+        Array of the tokenized test sentences
+
+    vocab_size: `int`
+        Vocab size if keras embedding space training is wanted
+    
+    vocab: `dict`
+        Containing key pair 'int':'word', each 'int' represents
+        the encoding which the keras tokenizer generates
+
     """
     
     # Create new Class TfidfVectorizer with max 5000 features
@@ -246,6 +306,33 @@ def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test):
     return X_train, X_test, vocab_size, vocab
 
 def tfidf_as_embedding_weights(num_words, corpus, sentences_train):
+    """Function to tokenize the words with the TFIDF tokenizer 
+
+    Parameters
+    ----------
+    sentences_train : numpy.array: `str`
+        Corpus text, Sentences to train the model
+
+    num_words: `int` 
+        No. of words to use in the embedding space of GloVe or TFIDF
+
+    corpus : obj: pandas.dataframe
+        df containing two columns 'text' and 'label'
+
+    Returns
+    -------
+
+    embedding_matrix: obj: numpy.array
+        2d numpy array containing the embedding space
+        rows = vocab_size
+        columns = embedding_dim
+    
+    embedding_dim: `int`
+        Length of the word vector ( dimension in the embedding space)
+
+    """
+
+
 
     # Create new Class TfidfVectorizer with max 5000 features
     Tfidf_vect = TfidfVectorizer(max_features=num_words)
@@ -263,7 +350,26 @@ def tfidf_as_embedding_weights(num_words, corpus, sentences_train):
 
 
 def create_embedding_matrix(filepath, word_index, embedding_dim):
+    """Function to create embedding matrix using GloVe embedding space.
+
+    Parameters
+    ----------
+    filepath : `str`
+        Corpus text, each element being a sentence
+    word_index : `str`
+        Corpus text, each element being a sentence
+    embedding_dim : `str`
+        Corpus text, each element being a sentence        
     
+    Returns
+    -------
+    embedding_matrix: obj: numpy.array
+        2d numpy array containing the embedding space
+        rows = vocab_size
+        columns = embedding_dim
+    """    
+
+
     vocab_size = len(word_index) + 1  # Adding again 1 because of reserved 0 index
     embedding_matrix = np.zeros((vocab_size, embedding_dim))
 
@@ -279,7 +385,30 @@ def create_embedding_matrix(filepath, word_index, embedding_dim):
 
 
 def fit_pretrained_embedding_space_glove(embedding_dim, filepath, vocab):
+    """Fit pretrained embedding using embedding space GloVe
 
+    Parameters
+    ----------
+    embedding_dim: `int`
+        Length of the word vector ( dimension in the embedding space)
+    
+    filepath: `str`
+        File path to GLoVe pretrained embedding words
+    
+    vocab: `dict`
+        Containing key pair 'int':'word', each 'int' represents
+        the encoding which the keras tokenizer generates
+
+    Returns
+    -------
+    embedding_matrix: obj: numpy.array
+        2d numpy array containing the embedding space
+        rows = vocab_size
+        columns = embedding_dim
+    
+    embedding_dim: `int`
+        Length of the word vector ( dimension in the embedding space)
+    """
        
     embedding_matrix = create_embedding_matrix(
                         filepath = filepath,
@@ -302,6 +431,67 @@ def data_vectorization(sentences_train,
                        use_tfidf_as_embedding_weights = True,
                        use_glove_pretrained_embeddings_weights = False):
 
+    """Apply data vectorization on the train and test data.  
+
+    Parameters
+    ----------
+
+    sentences_train : numpy.array: `str`
+        Corpus text, Sentences to train the model
+
+    sentences_test: numpy.array: `str`
+        Corpus text, Sentences to test the model
+
+    num_words: `int` 
+        No. of words to use in the embedding space of GloVe or TFIDF
+
+    seq_input_len: `int`
+        Length of the vector sentence ( no. of words per sentence)
+
+    filepath: `str`
+        File path to GLoVe pretrained embedding words
+    
+    corpus : obj: pandas.dataframe
+        df containing two columns 'text' and 'label'
+    
+    vocab: `dict`
+        Containing key pair 'int':'word', each 'int' represents
+        the encoding which the keras tokenizer generates
+    
+    embedding_dim: `int`
+        Length of the word vector ( dimension in the embedding space)
+    
+    use_keras_tokenizer: `bool`
+        If using keras word tokenizer
+
+    use_tfidf_tokenizer: `bool`
+        If using TFIDF tokenizer 
+    
+    use_tfidf_as_embedding_weights: `bool`
+        If using TFIDF tokenizer as embedding weights
+    
+    use_glove_pretrained_embeddings_weights: `bool` 
+        If using GloVe Petrained embedding weights
+
+    Returns
+    -------
+    output: `dict` 
+        X_train: obj: numpy.array: `float`
+            Array of the tokenized train sentences
+        X_test: obj: numpy.array: `float`
+            Array of the tokenized test sentences
+        vocab_size: `int`
+            Vocab size if keras embedding space training is wanted
+        vocab: `dict`
+            Containing key pair 'int':'word', each 'int' represents
+            the encoding which the keras tokenizer generates.
+        embedding_matrix: obj: numpy.array
+            2d numpy array containing the embedding space
+            rows = vocab_size
+            columns = embedding_dim
+        embedding_dim: `int`
+            Length of the word vector ( dimension in the embedding space)
+    """
     output = {}
     
     if use_keras_tokenizer:
