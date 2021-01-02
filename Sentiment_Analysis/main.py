@@ -11,9 +11,17 @@ from os.path import join
 from sklearn.metrics import accuracy_score, confusion_matrix
 
 from sys import path
-path.append( join( join( getcwd() , 'functions/' ) ) )
+path.append(  join( getcwd() , 'functions/' ) )
 
 from functions import preprocessing, modelling, postprocessing
+
+
+# Run only for the first time#
+import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
 
 
 def preprocess(data_dir, data, param_grid):
@@ -166,7 +174,7 @@ if __name__ == "__main__":
     # ----------------------------------------------------------------#
 
     current_time = datetime.now().strftime("%d-%m-%Y_%H_%M_%S")
-    data_dir = 'D:/Data_Science/ClassificationProblems/Sentiment_Analysis/src/data/SA_4_Categories.csv'
+    data_dir = join( getcwd() , 'data/SA_4_Categories.csv' ) 
 
     sent_tokenizer = False # TODO: Adjust for input to CNN
 
@@ -183,8 +191,8 @@ if __name__ == "__main__":
     use_pretrained_embeddings = True
 
     # Only if use_pretrained_embeddings == True then select embedding vector space type
-    use_glove_pretrained_embeddings_weights = True
-    use_tfidf_as_embedding_weights = False
+    use_glove_pretrained_embeddings_weights = False
+    use_tfidf_as_embedding_weights = True
 
     # Dictionary which will cotain all the model's variables
     data = {}
