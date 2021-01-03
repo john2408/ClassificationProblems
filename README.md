@@ -27,7 +27,7 @@ docker volume create results --> Create Volume to store results
 docker run -v ./results:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
 
 **From Windows**
-docker run -v /mnt/d/Data_Science/Classification_Problems/Sentiment_Analysis/results_docker":/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
+docker run -v /mnt/d/Data_Science/Classification_Problems/Sentiment_Analysis/results_docker:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
 
 **From Linux**
 cd Sentiment_Analysis
