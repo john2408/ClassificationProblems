@@ -18,11 +18,19 @@ Cannot clone object <tensorflow.python.keras.wrappers.scikit_learn.KerasClassifi
 
 # Build Docker Container
 --------------------------
-
+cd Sentiment_Analysis
 docker build -t text_classifier:1.0 .
 
 # Run Docker Container
 -------------------------
+docker volume create results --> Create Volume to store results
+docker run -v ./results:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
 
+**From Windows**
+docker run -v /mnt/d/Data_Science/Classification_Problems/Sentiment_Analysis/results_docker":/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
+
+**From Linux**
+cd Sentiment_Analysis
 docker run -v ~/results_docker:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
-docker run -p 3000:3000 -v ~/results_docker:/opt/program/Sentiment_Analysis/results --name sa text_classifier:1.0
+
+docker run -it --name sa --mount type=bind,source="$(pwd)"/results_docker,target=/opt/program/Sentiment_Analysis/results text_classifier:1.0
