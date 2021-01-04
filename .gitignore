@@ -1,3 +1,4 @@
 # Ignore Following Files 
 .ipynb_checkpoints
 .vscode
+__pycache__

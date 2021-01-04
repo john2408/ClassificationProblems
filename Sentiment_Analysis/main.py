@@ -173,7 +173,11 @@ if __name__ == "__main__":
     # 0. Parameters
     # ----------------------------------------------------------------#
 
+
+    #config = ConfigDict.read('config/config_param.yml')
+
     current_time = datetime.now().strftime("%d-%m-%Y_%H_%M_%S")
+
     data_dir = join( getcwd() , 'data/SA_4_Categories.csv' ) 
 
     sent_tokenizer = False # TODO: Adjust for input to CNN
