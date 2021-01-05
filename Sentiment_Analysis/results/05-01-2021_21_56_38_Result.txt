@@ -1,0 +1,39 @@
+Running CNN Modeling 
+ 
+            Best Accuracy : 0.7736318277482369
+  
+            Test Accuracy : 0.7617865800857544
+
+            epochs : 30 
+
+            batch size : 16 
+
+            cross validations : 4 
+
+            No. Iterations : 5 
+
+            sent_tokenizer : False 
+   
+            use_nltk_cleaning: False
+ 
+            text_cleaning: True
+  
+            use_tfidf_tokenizer: False
+ 
+            use_keras_tokenizer: True
+ 
+            use_pretrained_embeddings: True
+ 
+            use_glove_pretrained_embeddings_weights: False
+ 
+            use_tfidf_as_embedding_weights: True
+ 
+            best param: {'vocab_size': 5000, 'use_pretrained_embeddings': True, 'seq_input_len': 50, 'output_label': 5, 'num_filters_cv': (64, 16), 'nodes_hidden_dense_layer': 5, 'kernel_size_cv': (2, 3), 'embedding_matrix': array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]]), 'embedding_dim': 50}
+ 
+            label accuracy: {0: 86.75, 1: 57.14, 2: 40.0, 3: 18.18, 4: 44.44}
