@@ -19,6 +19,7 @@ dependencies:
   - wheel=0.36.2
   - zlib=1.2.11
   - scikit-learn==0.21.2
+  - ruamel.yaml
   - pip:
     - absl-py==0.11.0
     - argon2-cffi==20.1.0
@@ -74,7 +75,7 @@ dependencies:
     - numpy==1.19.4
     - oauthlib==3.1.0
     - opt-einsum==3.3.0
-    - openpyxl
+    - openpyxl==3.0.5
     - packaging==20.8
     - pandas==1.1.5
     - pandocfilters==1.4.3
@@ -122,4 +123,3 @@ dependencies:
     - werkzeug==1.0.1
     - wrapt==1.12.1
     - zipp==3.4.0
-    - ruamel.yaml
