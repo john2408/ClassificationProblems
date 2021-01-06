@@ -84,7 +84,9 @@ def write_results_txt_CNN(output_file, best_train_acc, best_train_param,
 
     print("Writting results...")
 
-    with open(output_file, 'a') as f:
+    output_file  = f"{output_file}_CNN.txt"
+
+    with open(output_file, 'w+') as f:
 
         output_string = f"""Running CNN Modeling \n 
             Best Accuracy : {best_train_acc}\n  
@@ -162,7 +164,9 @@ def write_results_txt_SVM(output_file,
 
     print("Writting results...")
 
-    with open(output_file, 'a') as f:
+    output_file  = f"{output_file}_SVM.txt"
+
+    with open(output_file, 'w+') as f:
 
         output_string = f"""Running SVM Modeling \n  
             Test Accuracy : {test_acc}\n

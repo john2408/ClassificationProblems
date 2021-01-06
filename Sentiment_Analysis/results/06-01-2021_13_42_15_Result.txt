@@ -1,0 +1,81 @@
+Running SVM Modeling 
+  
+            Test Accuracy : 75.5556
+
+            C : 1.0
+
+            kernel : linear
+
+            degree : 3
+ 
+            gamma : auto
+
+            class_weight : {0: 1, 1: 1, 2: 1, 3: 1}
+
+            sent_tokenizer : False 
+   
+            use_nltk_cleaning: True
+ 
+            text_cleaning: False
+  
+            make_all_other_classes_1: False
+  
+            remove_class_0: True 
+
+            use_tfidf_tokenizer: True
+ 
+            use_keras_tokenizer: False
+ 
+            use_pretrained_embeddings: True
+ 
+            use_glove_pretrained_embeddings_weights: False
+ 
+            use_tfidf_as_embedding_weights: True
+ 
+            imbalanced_classes: True
+ 
+            label accuracy: {0: 56.25, 1: 65.63, 2: 89.47, 3: 87.88}Running CNN Modeling 
+ 
+            Best Accuracy : 0.5434243155472331
+  
+            Test Accuracy : 0.6074073910713196
+
+            epochs : 30 
+
+            batch size : 16 
+
+            cross validations : 4 
+
+            No. Iterations : 5 
+
+            sent_tokenizer : False 
+   
+            use_nltk_cleaning: True
+ 
+            text_cleaning: False
+  
+            use_tfidf_tokenizer: True
+ 
+            use_keras_tokenizer: False
+ 
+            use_pretrained_embeddings: True
+ 
+            use_glove_pretrained_embeddings_weights: False
+ 
+            use_tfidf_as_embedding_weights: True
+ 
+            best param: {'vocab_size': 5000, 'use_pretrained_embeddings': True, 'seq_input_len': 50, 'output_label': 4, 'num_filters_cv': (64, 16), 'nodes_hidden_dense_layer': 5, 'kernel_size_cv': (2, 3), 'embedding_matrix': array([[0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ],
+       [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ],
+       [0.        , 0.        , 0.32944235, ..., 0.        , 0.        ,
+        0.        ],
+       ...,
+       [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ],
+       [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ],
+       [0.        , 0.        , 0.        , ..., 0.        , 0.        ,
+        0.        ]]), 'embedding_dim': 50}
+ 
+            label accuracy: {0: 56.67, 1: 57.14, 2: 60.0, 3: 70.37}

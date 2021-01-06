@@ -1,23 +1,17 @@
 params : 
-  model:
-    running_CNN: True
-    running_SVM: True
-    seed : 123
   input_data : 
-    data : "data/ML_data_2.0.xlsx"
-    sep : ',' # CSV separator
-    read_type : 'excel' # it can be 'csv' or 'excel'
+    5_labels : "data/SA_4_Categories.csv"
 
   tokenization_options:
     sent_tokenizer : False # TODO: Adjust for input to CNN
 
     # Text Cleaning Options
-    use_nltk_cleaning : True
-    text_cleaning : False
+    use_nltk_cleaning : False
+    text_cleaning : True
 
     # Word Tokenizer Options
-    use_tfidf_tokenizer : True # Not ready to use for CNN , more suitable for CNN, can also 
-    use_keras_tokenizer : False # More suitable for SVM, or Naive Bayes
+    use_tfidf_tokenizer : False # TODO: Adjust for input to CNN
+    use_keras_tokenizer : True
 
     # If set to FALSE then keras embedding space training is used instead
     # Embedding Space possibilites are GloVe or TFIDF
@@ -26,11 +20,6 @@ params :
     # Only if use_pretrained_embeddings == True then select embedding vector space type
     use_glove_pretrained_embeddings_weights : False
     use_tfidf_as_embedding_weights : True
-  
-    imbalanced_classes : True # parameter for SVM
-
-    make_all_other_classes_1 : False
-    remove_class_0 : True
 
   data: 
     # Initialize Model
@@ -43,28 +32,6 @@ params :
     embedding_dim : 40 # Length of the word vector ( dimension in the embedding space)
     nodes_hidden_dense_layer : 5 # No. of nodes for hidden Dense layer
     filepath : 'D:/Semillero Data Science/Deep Learning/pre-trained Word Embeddings/GloVe/glove.6B.50d.txt' # File path to GLoVe pretrained embedding word
-    
-    SVM:
-      C : 1.0
-      kernel : 'linear'
-      degree : 3
-      gamma : 'auto'
-      class_weights:
-        '0': 0.05
-        '1': 1
-        '2': 1
-        '3': 1
-        '4': 1
-      class_weights_2:
-        '0': 0.7
-        '1': 1
-      class_weights_1_2_3_4:
-        '0': 1
-        '1': 1
-        '2': 1
-        '3': 1
-
-
 
   hyperparam:
     num_filters_cv: # No of filter to use in convolution
