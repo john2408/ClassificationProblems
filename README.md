@@ -34,13 +34,15 @@ Cannot clone object <tensorflow.python.keras.wrappers.scikit_learn.KerasClassifi
 
 ``` bash
 cd Sentiment_Analysis
-conda env create --name envname --file=environments.yml
+conda env create --name envname --file=environment.yaml
+python main.py
 ```
 or also
 
 ``` bash
 cd Sentiment_Analysis
 conda create --name class --file requirements.txt
+python main.py
 ```
 
 ## Build Docker Container
