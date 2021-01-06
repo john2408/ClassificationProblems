@@ -419,16 +419,18 @@ def fit_pretrained_embedding_space_glove(embedding_dim, filepath, vocab):
     return embedding_matrix, embedding_dim
     
 
-def data_vectorization(sentences_train, 
-                       sentences_test, 
+def data_vectorization(sentences_train_CNN, 
+                       sentences_test_CNN, 
+                       sentences_train_SVM, 
+                       sentences_test_SVM,
                        num_words, 
                        seq_input_len, 
                        filepath,
                        corpus,
                        vocab,
                        embedding_dim,
-                       use_keras_tokenizer = True, 
-                       use_tfidf_tokenizer = False, 
+                       running_CNN = True, 
+                       running_SVM = True, 
                        use_tfidf_as_embedding_weights = True,
                        use_glove_pretrained_embeddings_weights = False):
 
@@ -437,11 +439,17 @@ def data_vectorization(sentences_train,
     Parameters
     ----------
 
-    sentences_train : numpy.array: `str`
-        Corpus text, Sentences to train the model
+    sentences_train_CNN : numpy.array: `str`
+        Corpus text, Sentences to train the CNN model
 
-    sentences_test: numpy.array: `str`
-        Corpus text, Sentences to test the model
+    sentences_test_CNN: numpy.array: `str`
+        Corpus text, Sentences to test the CNN model
+    
+    sentences_train_SVM : numpy.array: `str`
+        Corpus text, Sentences to train the SVM model
+
+    sentences_test_SVM: numpy.array: `str`
+        Corpus text, Sentences to test the SVM model
 
     num_words: `int` 
         No. of words to use in the embedding space of GloVe or TFIDF
@@ -462,11 +470,11 @@ def data_vectorization(sentences_train,
     embedding_dim: `int`
         Length of the word vector ( dimension in the embedding space)
     
-    use_keras_tokenizer: `bool`
-        If using keras word tokenizer
+    running_CNN: `bool`
+        For CNN use keras word tokenizer
 
-    use_tfidf_tokenizer: `bool`
-        If using TFIDF tokenizer 
+    running_SVM: `bool`
+        For SVM use TFIDF tokenizer 
     
     use_tfidf_as_embedding_weights: `bool`
         If using TFIDF tokenizer as embedding weights
@@ -495,17 +503,17 @@ def data_vectorization(sentences_train,
     """
     output = {}
     
-    if use_keras_tokenizer:
+    if running_CNN:
         
-        output['X_train'], output['X_test'], output['vocab_size'], output['vocab'] = keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len)
+        output['X_train_CNN'], output['X_test_CNN'], output['vocab_size'], output['vocab'] = keras_tokenizer(sentences_train_CNN, sentences_test_CNN, num_words, seq_input_len)
                
-    elif use_tfidf_tokenizer:
+    if running_SVM:
         
-        output['X_train'], output['X_test'], output['vocab_size'], output['vocab'] = tfidf_tokenizer(sentences_train, sentences_test, num_words)
+        output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM)
     
     if use_tfidf_as_embedding_weights: 
         
-        output['embedding_matrix'], output['embedding_dim'] = tfidf_as_embedding_weights(num_words, corpus, sentences_train)
+        output['embedding_matrix'], output['embedding_dim'] = tfidf_as_embedding_weights(num_words, corpus, sentences_train_CNN)
 
     
     if use_glove_pretrained_embeddings_weights:  

@@ -146,6 +146,9 @@ def prepare_training_data(corpus, test_size = 0.25):
         df containing two columns 'text' and 'label'
     test_size : `float`
         test size for the given data
+    Y_encoder_NN: `bool`
+        whether to encode the labeled values for Neural
+        Network
 
     Returns
     -------
@@ -164,16 +167,30 @@ def prepare_training_data(corpus, test_size = 0.25):
 
     # Use Label encoder for the expected output
     Encoder = LabelEncoder()
-    encoded_Y = Encoder.fit_transform(corpus['label'].values)
-    Y = pd.get_dummies(encoded_Y).values
+    Y = Encoder.fit_transform(corpus['label'].values)
 
-    sentences_train, sentences_test, Y_train, Y_test = train_test_split( sentences, Y, test_size = test_size)
-   
-    output['sentences_train'] = sentences_train
-    output['sentences_test'] = sentences_test
-    output['Y_train'] = Y_train
-    output['Y_test'] = Y_test
-    output['output_label'] = len(np.unique(encoded_Y))
+    # No. of Classes
+    output_label = len(np.unique(Y))
+
+    # Generate Y for SVM
+    sentences_train_SVM, sentences_test_SVM, Y_train_SVM, Y_test_SVM = train_test_split( sentences, Y, test_size = test_size)
+    
+    # Generate Y for SVM
+    Y = pd.get_dummies(Y).values
+    sentences_train_CNN, sentences_test_CNN, Y_train_CNN, Y_test_CNN = train_test_split( sentences, Y, test_size = test_size)
+
+
+    output['sentences_train_SVM'] = sentences_train_SVM
+    output['sentences_test_SVM'] = sentences_test_SVM
+    output['Y_train_SVM'] = Y_train_SVM
+    output['Y_test_SVM'] = Y_test_SVM
+
+    output['sentences_train_CNN'] = sentences_train_CNN
+    output['sentences_test_CNN'] = sentences_test_CNN
+    output['Y_train_CNN'] = Y_train_CNN
+    output['Y_test_CNN'] = Y_test_CNN
+
+    output['output_label'] = output_label
 
     return output
 
