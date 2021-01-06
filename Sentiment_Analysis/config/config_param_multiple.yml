@@ -2,16 +2,18 @@ params :
   model:
     running_CNN: True
     running_SVM: True
+    seed : 123
   input_data : 
-    5_labels : "data/ML_data_2.0.csv"
-    sep : ';' # CSV separator
+    data : "data/ML_data_2.0.xlsx"
+    sep : ',' # CSV separator
+    read_type : 'excel' # it can be 'csv' or 'excel'
 
   tokenization_options:
     sent_tokenizer : False # TODO: Adjust for input to CNN
 
     # Text Cleaning Options
-    use_nltk_cleaning : False
-    text_cleaning : True
+    use_nltk_cleaning : True
+    text_cleaning : False
 
     # Word Tokenizer Options
     use_tfidf_tokenizer : True # Not ready to use for CNN , more suitable for CNN, can also 
