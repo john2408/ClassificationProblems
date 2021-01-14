@@ -29,7 +29,7 @@ params :
   
     imbalanced_classes : True # parameter for SVM
 
-    make_all_other_classes_1 : False
+    make_all_other_classes_1 : True
     remove_class_0 : True
 
   data: 
@@ -49,6 +49,7 @@ params :
       kernel : 'linear'
       degree : 3
       gamma : 'auto'
+      use_class_weights: True
       class_weights: # if make_all_other_classes_1 and remove_class_0 are set to FALSE
         '0': 0.05
         '1': 1
@@ -56,7 +57,7 @@ params :
         '3': 1
         '4': 1
       class_weights_2: # if make_all_other_classes_1 is set to TRUE
-        '0': 0.7
+        '0': 0.25
         '1': 1
       class_weights_1_2_3_4: # if remove_class_0 is set to TRUE
         '0': 1
