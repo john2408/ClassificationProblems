@@ -191,6 +191,7 @@ def prepare_training_data(corpus, test_size = 0.25):
     output['Y_test_CNN'] = Y_test_CNN
 
     output['output_label'] = output_label
+    output['corpus'] = corpus
 
     return output
 

@@ -10,10 +10,12 @@ from tensorflow.python.client import device_lib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import RandomizedSearchCV
 
-from postprocessing import cal_label_accuracy
+from postprocessing import cal_label_accuracy, store_to_pickle
 
 import numpy as np
+from os.path import join
 
+import pickle
 
 
 def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embedding_matrix,
@@ -256,7 +258,8 @@ def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
     return X_train, X_test, vocab_size, vocab
 
 
-def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test):
+def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test, timestamp, output_path_vectorizer,
+                    remove_class_0, make_all_other_classes_1, store_tfidf_tokenizer = False):
     """Function to tokenize the words with the TFIDF tokenizer 
 
     Parameters
@@ -272,6 +275,19 @@ def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test):
 
     corpus : obj: pandas.dataframe
         df containing two columns 'text' and 'label'
+
+    timestamp : `str`
+        Timestamp in str as "%Y-%m-d_%H-%M-%S"
+    
+    output_path_vectorizer : `str`
+        output path for vectorization model
+    
+    store_tfidf_tokenizer : `bool`
+        whether to store the TFIDF model 
+    
+    remove_class_0: 
+
+    make_all_other_classes_1:
 
     Returns
     -------
@@ -290,11 +306,32 @@ def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test):
 
     """
     
+
     # Create new Class TfidfVectorizer with max 5000 features
     Tfidf_vect = TfidfVectorizer(max_features=num_words)
 
     # Learn vocabulary and idf from training set
     Tfidf_vect.fit(corpus['text'])
+
+    # Store TFIDF Vectorizer to given location
+
+
+    if store_tfidf_tokenizer: 
+
+        file_name = 'TFIDF_vectorizer'
+
+        if remove_class_0:
+            file_name = f'TFIDF_vectorizer_1234'
+
+        if make_all_other_classes_1:
+            file_name = f'TFIDF_vectorizer_01'
+
+        store_to_pickle(data = Tfidf_vect, 
+                        output_path= output_path_vectorizer, 
+                        timestamp = timestamp,
+                        file_name = file_name)
+        
+
 
     # Transfor both the train and the test to document-term matrix
     X_train = Tfidf_vect.transform(sentences_train)
@@ -429,10 +466,14 @@ def data_vectorization(sentences_train_CNN,
                        corpus,
                        vocab,
                        embedding_dim,
+                       timestamp , 
+                       output_path_vectorizer ,
+                       store_tfidf_tokenizer ,
                        running_CNN = True, 
                        running_SVM = True, 
                        use_tfidf_as_embedding_weights = True,
-                       use_glove_pretrained_embeddings_weights = False):
+                       use_glove_pretrained_embeddings_weights = False, 
+                       ):
 
     """Apply data vectorization on the train and test data.  
 
@@ -509,7 +550,10 @@ def data_vectorization(sentences_train_CNN,
                
     if running_SVM:
         
-        output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM)
+        output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM, 
+                                                                                                                timestamp = timestamp, 
+                                                                                                                output_path_vectorizer = output_path_vectorizer,
+                                                                                                                store_tfidf_tokenizer = store_tfidf_tokenizer)
     
     if use_tfidf_as_embedding_weights: 
         

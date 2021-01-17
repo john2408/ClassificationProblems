@@ -1,6 +1,8 @@
 Running SVM Modeling 
   
-            Test Accuracy : 75.5556
+            Seed : 123
+
+            Test Accuracy : 71.8519
 
             C : 1.0
 
@@ -18,7 +20,7 @@ Running SVM Modeling
  
             text_cleaning: False
   
-            make_all_other_classes_1: True
+            make_all_other_classes_1: False
   
             remove_class_0: True 
 
@@ -30,8 +32,8 @@ Running SVM Modeling
  
             use_glove_pretrained_embeddings_weights: False
  
-            use_tfidf_as_embedding_weights: True
+            use_tfidf_as_embedding_weights: False
  
             imbalanced_classes: True
  
-            label accuracy: {0: 56.25, 1: 65.63, 2: 89.47, 3: 87.88}
+            label accuracy: {0: 78.26, 1: 60.0, 2: 80.0, 3: 70.27}

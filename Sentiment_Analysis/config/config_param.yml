@@ -8,6 +8,15 @@ params :
     sep : ',' # CSV separator
     read_type : 'excel' # it can be 'csv' or 'excel'
 
+  output_data:
+    output_path_vectorizer : 'results/vectorizer/'
+    output_path_model : 'results/model/'
+    output_parameters : 'results/parameters/'
+    store_tfidf_tokenizer : True
+    store_keras_tokenizer : True
+    store_SVM_model : True
+    store_CNN_model : True
+
   tokenization_options:
     sent_tokenizer : False # TODO: Adjust for input to CNN
 
@@ -25,7 +34,7 @@ params :
 
     # Only if use_pretrained_embeddings == True then select embedding vector space type
     use_glove_pretrained_embeddings_weights : False
-    use_tfidf_as_embedding_weights : True
+    use_tfidf_as_embedding_weights : False
   
     imbalanced_classes : True # parameter for SVM
 

@@ -1,4 +1,48 @@
 import numpy as np
+import pickle
+from os.path import join
+
+
+
+def load_pickle(output_path, timestamp, file_name):
+
+    with open(join(output_path,f'{timestamp}_{file_name}.pkl'), 'rb') as f:
+        loaded_data = pickle.load(f)
+    
+    return loaded_data
+
+
+def classify_new_sentences(new_sentence, model, vectorizer ):
+
+    sentence_train = vectorizer.transform(new_sentence['text'])
+
+    Pred_Y = model.predict(sentence_train)
+
+    return Pred_Y
+
+def store_to_pickle(data, output_path, timestamp, file_name ):
+    """Function to calculate the accuracy on
+    ever categorical expected output variable
+
+    Parameters
+    ----------
+    conf_matrix : 
+    
+    Returns
+    -------
+    label_acc: ´dict´
+        dictionary containing the label accuracy
+        'label_n': ´str´ - accuracy of label n 
+    """
+
+
+    serialized = pickle.dumps(data)
+    _file = join(output_path,f'{timestamp}_{file_name}.pkl')
+
+    with open(_file,'wb') as file_object:
+        file_object.write(serialized)
+
+
 
 def cal_label_accuracy(conf_matrix, verbose = 0):
     """Function to calculate the accuracy on
@@ -113,7 +157,7 @@ def write_results_txt_CNN(output_file, best_train_acc, best_train_param,
 
 
 
-def write_results_txt_SVM(output_file,  
+def write_results_txt_SVM(output_file, timestamp, 
                       test_acc, label_acc, sent_tokenizer, use_nltk_cleaning, 
                       text_cleaning , use_tfidf_tokenizer, 
                       use_keras_tokenizer, use_pretrained_embeddings,
@@ -126,7 +170,8 @@ def write_results_txt_SVM(output_file,
                       kernel,
                       degree, 
                       gamma,
-                      class_weight):
+                      class_weight, 
+                      seed):
 
 
     """Function to generate results file. 
@@ -158,17 +203,31 @@ def write_results_txt_SVM(output_file,
     use_glove_pretrained_embeddings_weights:
 
     use_tfidf_as_embedding_weights:
+
+    seed: 
     
     """
 
 
     print("Writting results...")
 
-    output_file  = f"{output_file}_SVM.txt"
+
+    txt_name = f'{timestamp}_SVM.txt'
+
+    if make_all_other_classes_1:
+        txt_name = f'{timestamp}_SVM_01.txt'
+
+    if remove_class_0:
+        txt_name = f'{timestamp}_SVM_1234.txt'
+
+    output_file  = join( output_file, txt_name )
+
+    
 
     with open(output_file, 'w+') as f:
 
         output_string = f"""Running SVM Modeling \n  
+            Seed : {seed}\n
             Test Accuracy : {test_acc}\n
             C : {C}\n
             kernel : {kernel}\n
