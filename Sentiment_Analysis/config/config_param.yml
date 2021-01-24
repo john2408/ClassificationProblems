@@ -25,8 +25,8 @@ params :
     text_cleaning : False
 
     # Word Tokenizer Options
-    use_tfidf_tokenizer : True # Not ready to use for CNN , more suitable for CNN, can also 
-    use_keras_tokenizer : False # More suitable for SVM, or Naive Bayes
+    use_tfidf_tokenizer : True # More suitable for SVM, or Naive Bayes
+    use_keras_tokenizer : True # Suitable for CNN
 
     # If set to FALSE then keras embedding space training is used instead
     # Embedding Space possibilites are GloVe or TFIDF
