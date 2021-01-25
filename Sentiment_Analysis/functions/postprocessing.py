@@ -250,3 +250,82 @@ def write_results_txt_SVM(output_file, timestamp,
         print(output_string)
 
         f.write(output_string)
+
+
+
+
+def write_results_txt_BAYES(output_file, timestamp, 
+                      test_acc, label_acc, sent_tokenizer, use_nltk_cleaning, 
+                      text_cleaning , use_tfidf_tokenizer,  use_pretrained_embeddings,
+                      make_all_other_classes_1,
+                      remove_class_0, 
+                      seed):
+
+
+    """Function to generate results file. 
+
+    Parameters
+    ----------
+    output_file : 
+
+    best_train_acc:
+
+    best_train_param:
+
+    test_acc:
+
+    label_acc: 
+
+    sent_tokenizer:
+
+    use_nltk_cleaning: 
+
+    text_cleaning: 
+
+    use_tfidf_tokenizer:
+
+    use_keras_tokenizer:
+
+    use_pretrained_embeddings:
+
+    use_glove_pretrained_embeddings_weights:
+
+    use_tfidf_as_embedding_weights:
+
+    seed: 
+    
+    """
+
+
+    print("Writting results...")
+
+
+    txt_name = f'{timestamp}_BAYES.txt'
+
+    if make_all_other_classes_1:
+        txt_name = f'{timestamp}_BAYES_01.txt'
+
+    if remove_class_0:
+        txt_name = f'{timestamp}_BAYES_1234.txt'
+
+    output_file  = join( output_file, txt_name )
+
+    
+
+    with open(output_file, 'w+') as f:
+
+        output_string = f"""Running BAYES Modeling \n  
+            Seed : {seed}\n
+            Test Accuracy : {test_acc}\n
+            sent_tokenizer : {sent_tokenizer} \n   
+            use_nltk_cleaning: {use_nltk_cleaning}\n 
+            text_cleaning: {text_cleaning}\n  
+            make_all_other_classes_1: {make_all_other_classes_1}\n  
+            remove_class_0: {remove_class_0} \n
+            use_tfidf_tokenizer: {use_tfidf_tokenizer}\n 
+            use_pretrained_embeddings: {use_pretrained_embeddings}\n 
+            label accuracy: {label_acc}"""  
+    
+        print(output_string)
+
+        f.write(output_string)

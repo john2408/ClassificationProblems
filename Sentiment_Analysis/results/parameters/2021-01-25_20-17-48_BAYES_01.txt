@@ -1,0 +1,21 @@
+Running BAYES Modeling 
+  
+            Seed : 123
+
+            Test Accuracy : 83.0677
+
+            sent_tokenizer : False 
+   
+            use_nltk_cleaning: True
+ 
+            text_cleaning: False
+  
+            make_all_other_classes_1: True
+  
+            remove_class_0: False 
+
+            use_tfidf_tokenizer: True
+ 
+            use_pretrained_embeddings: True
+ 
+            label accuracy: {0: 98.64, 1: 40.3}

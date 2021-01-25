@@ -205,7 +205,10 @@ def hyperparameter_optimization(X_train, Y_train, X_test, Y_test,
     return output
  
 
-def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
+def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len, 
+                    store_keras_tokenizer, remove_class_0, make_all_other_classes_1, 
+                    output_path_vectorizer, 
+                    timestamp):
     """Function to tokenize the word with the keras word tokenizer engine. 
 
     Parameters
@@ -221,6 +224,21 @@ def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
 
     seq_input_len: `int`
         Length of the vector sentence ( no. of words per sentence)
+
+    store_keras_tokenizer : `bool`
+        whether to store the Keras tokenizer model 
+    
+    remove_class_0: `bool`
+        model for 0 and 1. 1 representing the classes 1,2,3,4. 
+
+    make_all_other_classes_1: `bool`
+        model for 1,2,3 and 4. The output will be mapped as 1:0, 2:1, 3:2, 4:3.
+
+    timestamp : `str`
+        Timestamp in str as "%Y-%m-d_%H-%M-%S"
+    
+    output_path_vectorizer : `str`
+        output path for vectorization model
 
     Returns
     -------
@@ -240,17 +258,35 @@ def keras_tokenizer(sentences_train, sentences_test, num_words, seq_input_len):
     """
 
     # Start Tokenizer Object
-    tokenizer = Tokenizer(num_words = num_words)
+    kears_tokenizer = Tokenizer(num_words = num_words)
 
     # Train vocabulary
-    tokenizer.fit_on_texts(sentences_train)
+    kears_tokenizer.fit_on_texts(sentences_train)
 
-    X_train = tokenizer.texts_to_sequences(sentences_train) 
-    X_test = tokenizer.texts_to_sequences(sentences_test)
 
-    vocab_size = len(tokenizer.word_index) + 1  # Adding 1 because of reserved 0 index
+    if store_keras_tokenizer: 
 
-    vocab = tokenizer.word_index
+        file_name = 'KERAS_vectorizer'
+
+        if remove_class_0:
+            file_name = f'KERAS_vectorizer_1234'
+
+        if make_all_other_classes_1:
+            file_name = f'KERAS_vectorizer_01'
+
+        store_to_pickle(data = kears_tokenizer, 
+                        output_path= output_path_vectorizer, 
+                        timestamp = timestamp,
+                        file_name = file_name)
+            
+
+
+    X_train = kears_tokenizer.texts_to_sequences(sentences_train) 
+    X_test = kears_tokenizer.texts_to_sequences(sentences_test)
+
+    vocab_size = len(kears_tokenizer.word_index) + 1  # Adding 1 because of reserved 0 index
+
+    vocab = kears_tokenizer.word_index
 
     X_train = pad_sequences(X_train, padding = 'post', maxlen = seq_input_len)
     X_test = pad_sequences(X_test, padding = 'post', maxlen = seq_input_len)
@@ -285,9 +321,11 @@ def tfidf_tokenizer(num_words, corpus, sentences_train, sentences_test, timestam
     store_tfidf_tokenizer : `bool`
         whether to store the TFIDF model 
     
-    remove_class_0: 
+    remove_class_0: `bool`
+        model for 0 and 1. 1 representing the classes 1,2,3,4. 
 
-    make_all_other_classes_1:
+    make_all_other_classes_1: `bool`
+        model for 1,2,3 and 4. The output will be mapped as 1:0, 2:1, 3:2, 4:3.
 
     Returns
     -------
@@ -456,115 +494,115 @@ def fit_pretrained_embedding_space_glove(embedding_dim, filepath, vocab):
     return embedding_matrix, embedding_dim
     
 
-def data_vectorization(sentences_train_CNN, 
-                       sentences_test_CNN, 
-                       sentences_train_SVM, 
-                       sentences_test_SVM,
-                       num_words, 
-                       seq_input_len, 
-                       filepath,
-                       corpus,
-                       vocab,
-                       embedding_dim,
-                       timestamp , 
-                       output_path_vectorizer ,
-                       store_tfidf_tokenizer ,
-                       running_CNN = True, 
-                       running_SVM = True, 
-                       use_tfidf_as_embedding_weights = True,
-                       use_glove_pretrained_embeddings_weights = False, 
-                       ):
+# def data_vectorization(sentences_train_CNN, 
+#                        sentences_test_CNN, 
+#                        sentences_train_SVM, 
+#                        sentences_test_SVM,
+#                        num_words, 
+#                        seq_input_len, 
+#                        filepath,
+#                        corpus,
+#                        vocab,
+#                        embedding_dim,
+#                        timestamp , 
+#                        output_path_vectorizer ,
+#                        store_tfidf_tokenizer ,
+#                        running_CNN = True, 
+#                        running_SVM = True, 
+#                        use_tfidf_as_embedding_weights = True,
+#                        use_glove_pretrained_embeddings_weights = False, 
+#                        ):
 
-    """Apply data vectorization on the train and test data.  
+#     """Apply data vectorization on the train and test data.  
 
-    Parameters
-    ----------
+#     Parameters
+#     ----------
 
-    sentences_train_CNN : numpy.array: `str`
-        Corpus text, Sentences to train the CNN model
+#     sentences_train_CNN : numpy.array: `str`
+#         Corpus text, Sentences to train the CNN model
 
-    sentences_test_CNN: numpy.array: `str`
-        Corpus text, Sentences to test the CNN model
+#     sentences_test_CNN: numpy.array: `str`
+#         Corpus text, Sentences to test the CNN model
     
-    sentences_train_SVM : numpy.array: `str`
-        Corpus text, Sentences to train the SVM model
+#     sentences_train_SVM : numpy.array: `str`
+#         Corpus text, Sentences to train the SVM model
 
-    sentences_test_SVM: numpy.array: `str`
-        Corpus text, Sentences to test the SVM model
+#     sentences_test_SVM: numpy.array: `str`
+#         Corpus text, Sentences to test the SVM model
 
-    num_words: `int` 
-        No. of words to use in the embedding space of GloVe or TFIDF
+#     num_words: `int` 
+#         No. of words to use in the embedding space of GloVe or TFIDF
 
-    seq_input_len: `int`
-        Length of the vector sentence ( no. of words per sentence)
+#     seq_input_len: `int`
+#         Length of the vector sentence ( no. of words per sentence)
 
-    filepath: `str`
-        File path to GLoVe pretrained embedding words
+#     filepath: `str`
+#         File path to GLoVe pretrained embedding words
     
-    corpus : obj: pandas.dataframe
-        df containing two columns 'text' and 'label'
+#     corpus : obj: pandas.dataframe
+#         df containing two columns 'text' and 'label'
     
-    vocab: `dict`
-        Containing key pair 'int':'word', each 'int' represents
-        the encoding which the keras tokenizer generates
+#     vocab: `dict`
+#         Containing key pair 'int':'word', each 'int' represents
+#         the encoding which the keras tokenizer generates
     
-    embedding_dim: `int`
-        Length of the word vector ( dimension in the embedding space)
+#     embedding_dim: `int`
+#         Length of the word vector ( dimension in the embedding space)
     
-    running_CNN: `bool`
-        For CNN use keras word tokenizer
+#     running_CNN: `bool`
+#         For CNN use keras word tokenizer
 
-    running_SVM: `bool`
-        For SVM use TFIDF tokenizer 
+#     running_SVM: `bool`
+#         For SVM use TFIDF tokenizer 
     
-    use_tfidf_as_embedding_weights: `bool`
-        If using TFIDF tokenizer as embedding weights
+#     use_tfidf_as_embedding_weights: `bool`
+#         If using TFIDF tokenizer as embedding weights
     
-    use_glove_pretrained_embeddings_weights: `bool` 
-        If using GloVe Petrained embedding weights
+#     use_glove_pretrained_embeddings_weights: `bool` 
+#         If using GloVe Petrained embedding weights
 
-    Returns
-    -------
-    output: `dict` 
-        X_train: obj: numpy.array: `float`
-            Array of the tokenized train sentences
-        X_test: obj: numpy.array: `float`
-            Array of the tokenized test sentences
-        vocab_size: `int`
-            Vocab size if keras embedding space training is wanted
-        vocab: `dict`
-            Containing key pair 'int':'word', each 'int' represents
-            the encoding which the keras tokenizer generates.
-        embedding_matrix: obj: numpy.array
-            2d numpy array containing the embedding space
-            rows = vocab_size
-            columns = embedding_dim
-        embedding_dim: `int`
-            Length of the word vector ( dimension in the embedding space)
-    """
-    output = {}
+#     Returns
+#     -------
+#     output: `dict` 
+#         X_train: obj: numpy.array: `float`
+#             Array of the tokenized train sentences
+#         X_test: obj: numpy.array: `float`
+#             Array of the tokenized test sentences
+#         vocab_size: `int`
+#             Vocab size if keras embedding space training is wanted
+#         vocab: `dict`
+#             Containing key pair 'int':'word', each 'int' represents
+#             the encoding which the keras tokenizer generates.
+#         embedding_matrix: obj: numpy.array
+#             2d numpy array containing the embedding space
+#             rows = vocab_size
+#             columns = embedding_dim
+#         embedding_dim: `int`
+#             Length of the word vector ( dimension in the embedding space)
+#     """
+#     output = {}
     
-    if running_CNN:
+#     if running_CNN:
         
-        output['X_train_CNN'], output['X_test_CNN'], output['vocab_size'], output['vocab'] = keras_tokenizer(sentences_train_CNN, sentences_test_CNN, num_words, seq_input_len)
+#         output['X_train_CNN'], output['X_test_CNN'], output['vocab_size'], output['vocab'] = keras_tokenizer(sentences_train_CNN, sentences_test_CNN, num_words, seq_input_len)
                
-    if running_SVM:
+#     if running_SVM:
         
-        output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM, 
-                                                                                                                timestamp = timestamp, 
-                                                                                                                output_path_vectorizer = output_path_vectorizer,
-                                                                                                                store_tfidf_tokenizer = store_tfidf_tokenizer)
+#         output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM, 
+#                                                                                                                 timestamp = timestamp, 
+#                                                                                                                 output_path_vectorizer = output_path_vectorizer,
+#                                                                                                                 store_tfidf_tokenizer = store_tfidf_tokenizer)
     
-    if use_tfidf_as_embedding_weights: 
+#     if use_tfidf_as_embedding_weights: 
         
-        output['embedding_matrix'], output['embedding_dim'] = tfidf_as_embedding_weights(num_words, corpus, sentences_train_CNN)
+#         output['embedding_matrix'], output['embedding_dim'] = tfidf_as_embedding_weights(num_words, corpus, sentences_train_CNN)
 
     
-    if use_glove_pretrained_embeddings_weights:  
+#     if use_glove_pretrained_embeddings_weights:  
         
-        output['embedding_matrix'] = create_embedding_matrix(
-                             filepath = filepath,
-                             word_index = vocab, 
-                             embedding_dim = embedding_dim)
+#         output['embedding_matrix'] = create_embedding_matrix(
+#                              filepath = filepath,
+#                              word_index = vocab, 
+#                              embedding_dim = embedding_dim)
         
-    return output
+#     return output

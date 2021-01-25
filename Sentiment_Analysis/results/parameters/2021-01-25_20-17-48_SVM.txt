@@ -2,7 +2,7 @@ Running SVM Modeling
   
             Seed : 123
 
-            Test Accuracy : 71.8519
+            Test Accuracy : 70.9163
 
             C : 1.0
 
@@ -12,7 +12,7 @@ Running SVM Modeling
  
             gamma : auto
 
-            class_weight : {0: 1, 1: 1, 2: 1, 3: 1}
+            class_weight : {0: 0.05, 1: 1, 2: 1, 3: 1, 4: 1}
 
             sent_tokenizer : False 
    
@@ -22,18 +22,18 @@ Running SVM Modeling
   
             make_all_other_classes_1: False
   
-            remove_class_0: True 
+            remove_class_0: False 
 
             use_tfidf_tokenizer: True
  
-            use_keras_tokenizer: False
+            use_keras_tokenizer: True
  
-            use_pretrained_embeddings: False
+            use_pretrained_embeddings: True
  
-            use_glove_pretrained_embeddings_weights: False
+            use_glove_pretrained_embeddings_weights: True
  
             use_tfidf_as_embedding_weights: False
  
             imbalanced_classes: True
  
-            label accuracy: {0: 78.26, 1: 60.0, 2: 80.0, 3: 70.27}
+            label accuracy: {0: 73.04, 1: 41.67, 2: 60.98, 3: 86.36, 4: 64.58}
