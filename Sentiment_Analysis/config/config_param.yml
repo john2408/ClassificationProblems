@@ -21,16 +21,16 @@ params :
 
     # If set to FALSE then keras embedding space training is used instead
     # Embedding Space possibilites are GloVe or TFIDF
-    use_pretrained_embeddings : False
+    use_pretrained_embeddings : True
 
     # Only if use_pretrained_embeddings == True then select embedding vector space type
-    use_glove_pretrained_embeddings_weights : False
-    use_tfidf_as_embedding_weights : True
+    use_glove_pretrained_embeddings_weights : True
+    use_tfidf_as_embedding_weights : False
   
     imbalanced_classes : True # parameter for SVM
 
-    make_all_other_classes_1 : False
-    remove_class_0 : True
+    make_all_other_classes_1 : True
+    remove_class_0 : False
 
   data: 
     # Initialize Model
@@ -83,14 +83,12 @@ params :
       - [2,4]
       - [3,4]
       - [3,5]  
-    vocab_size: # Vocab size if keras embedding space training is wanted
-      - 3000
-      - 4000
+    vocab_size: # This value cannot be less than num_words (i.e. 5000)
       - 5000
       - 6000 
 
     embedding_dim:
-      - 20 
+      - 20
       - 30
       - 40
       - 50

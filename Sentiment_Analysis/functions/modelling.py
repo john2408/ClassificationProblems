@@ -59,9 +59,12 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
     """
 
     model = Sequential()
+    
 
     if use_pretrained_embeddings:  
 
+        # Use Glove Embedding Matrix
+        
         model.add(layers.Embedding(embedding_matrix.shape[0], # Vocabulary Size
                                    embedding_matrix.shape[1], # Word Vector Dimension
                                    weights=[embedding_matrix], 
@@ -69,7 +72,7 @@ def create_model(num_filters_cv, kernel_size_cv, vocab_size, embedding_dim, embe
                                    trainable=False))
     else: 
         
-        # embedding_dim = 100 # Output Dimension - seq output length
+        # Keras Embedding Matrix Generation
         
         model.add(layers.Embedding(vocab_size, # Vocabulary Size
                                    embedding_dim, # Word Vector Dimension
@@ -506,11 +509,7 @@ def data_vectorization(sentences_train_CNN,
     if running_CNN:
         
         output['X_train_CNN'], output['X_test_CNN'], output['vocab_size'], output['vocab'] = keras_tokenizer(sentences_train_CNN, sentences_test_CNN, num_words, seq_input_len)
-               
-    if running_SVM:
-        
-        output['X_train_SVM'], output['X_test_SVM'], output['vocab_size_SVM'], output['vocab'] = tfidf_tokenizer(num_words, corpus, sentences_train_SVM, sentences_test_SVM)
-    
+ 
     if use_tfidf_as_embedding_weights: 
         
         output['embedding_matrix'], output['embedding_dim'] = tfidf_as_embedding_weights(num_words, corpus, sentences_train_CNN)
