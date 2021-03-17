@@ -157,6 +157,7 @@ def write_results_txt_CNN(output_file, best_train_acc, best_train_param,
 
 
 
+<<<<<<< HEAD
 def write_results_txt_SVM(output_file, timestamp, 
                       test_acc, label_acc, sent_tokenizer, use_nltk_cleaning, 
                       text_cleaning , use_tfidf_tokenizer, 
@@ -329,3 +330,6 @@ def write_results_txt_BAYES(output_file, timestamp,
         print(output_string)
 
         f.write(output_string)
+=======
+
+>>>>>>> debug

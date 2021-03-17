@@ -1,0 +1,45 @@
+Running CNN Modeling 
+ 
+            Best Accuracy : 0.8444148898124695
+  
+            Test Accuracy : 0.8346613645553589
+
+            epochs : 30 
+
+            batch size : 10 
+
+            cross validations : 4 
+
+            No. Iterations : 5 
+
+            sent_tokenizer : False 
+   
+            use_nltk_cleaning: True
+ 
+            text_cleaning: False
+  
+            use_tfidf_tokenizer: True
+ 
+            use_keras_tokenizer: False
+ 
+            use_pretrained_embeddings: True
+ 
+            use_glove_pretrained_embeddings_weights: True
+ 
+            use_tfidf_as_embedding_weights: False
+ 
+            best param: {'vocab_size': 6000, 'use_pretrained_embeddings': True, 'seq_input_len': 20, 'output_label': 2, 'num_filters_cv': [256, 64], 'nodes_hidden_dense_layer': 15, 'kernel_size_cv': [2, 3], 'embedding_matrix': array([[ 0.        ,  0.        ,  0.        , ...,  0.        ,
+         0.        ,  0.        ],
+       [-0.14896999, -0.41446   ,  0.57534999, ...,  0.025145  ,
+         0.32242   , -0.053632  ],
+       [ 0.54816997, -0.2086    ,  1.06239998, ...,  0.33985001,
+         0.36284   ,  0.30858001],
+       ...,
+       [-0.11694   , -0.35780001,  0.072456  , ...,  0.040751  ,
+         0.019299  , -0.28455001],
+       [-0.83750999,  0.69563001, -0.51407999, ..., -0.75838   ,
+         0.085523  , -0.83640999],
+       [-0.50748003, -0.12479   ,  0.012301  , ...,  0.71844   ,
+        -0.88622999, -0.77996999]]), 'embedding_dim': 20}
+ 
+            label accuracy: {0: 89.28, 1: 66.67}
